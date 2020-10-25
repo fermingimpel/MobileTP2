@@ -1,0 +1,3 @@
+include ':FGLogger'
+include ':app'
+rootProject.name = "FGTools"
