@@ -32,7 +32,7 @@ public class Player : MonoBehaviour {
             playerShoots[actualShoot].gameObject.SetActive(true);
             int type = Random.Range(0, 3);
             playerShoots[actualShoot].SetType((PlayerShoot.ShootType)type);
-            playerShoots[actualShoot].transform.localPosition = balls[type].transform.localPosition;
+            playerShoots[actualShoot].transform.position = balls[type].transform.position;
             actualShoot++;
             if (actualShoot >= playerShoots.Length)
                 actualShoot = 0;

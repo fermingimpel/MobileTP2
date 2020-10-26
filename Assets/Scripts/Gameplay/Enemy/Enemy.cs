@@ -30,11 +30,14 @@ public class Enemy : MonoBehaviour {
         actualHealth -= d;
         if (!hitted)
             StartCoroutine(Hit());
-        if(actualHealth <= 0) {
-            transform.position = new Vector3(startX, Random.Range(minY, maxY));
-            actualHealth = maxHealth;
+        if(actualHealth <= 0) 
             this.gameObject.SetActive(false);
-        }
+        
+    }
+
+    public void ResetEnemy() {
+        transform.position = new Vector3(startX, Random.Range(minY, maxY));
+        actualHealth = maxHealth;
     }
 
     IEnumerator Hit() {
