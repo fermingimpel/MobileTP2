@@ -5,8 +5,7 @@ using UnityEngine.EventSystems;
 public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler {
     [SerializeField] RectTransform stick;
     [SerializeField] Image background;
-    public float joystickLimit;
-
+    [SerializeField] float joystickLimit;
     Vector2 ConvertToLocalPos(PointerEventData eventData) {
         Vector2 newPos;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(transform as RectTransform, eventData.position, eventData.enterEventCamera, out newPos);
@@ -30,7 +29,6 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
     public void OnPointerDown(PointerEventData eventData) {
         if (stick != null && background != null) 
             stick.anchoredPosition = ConvertToLocalPos(eventData);
-        
     }
 
     public void OnPointerUp(PointerEventData eventData) {
