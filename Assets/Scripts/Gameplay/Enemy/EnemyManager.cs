@@ -8,8 +8,26 @@ public class EnemyManager : MonoBehaviour {
 
     [SerializeField] Enemy[] enemies;
     int actualEnemy=0;
+    int enemiesEliminated = 0;
+
+    public delegate void AllEnemiesEliminated();
+    public static event AllEnemiesEliminated EliminatedAllEnemies;
+
     void Start() {
+        Enemy.EnemyDead += EnemyDead;
         StartCoroutine(SpawnEnemies());
+    }
+
+    private void OnDisable() {
+        Enemy.EnemyDead -= EnemyDead;
+    }
+
+    void EnemyDead() {
+        enemiesEliminated++;
+        if(enemiesEliminated == enemiesToCreate) {
+            if (EliminatedAllEnemies != null)
+                EliminatedAllEnemies();
+        }
     }
 
     IEnumerator SpawnEnemies() {

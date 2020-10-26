@@ -17,6 +17,12 @@ public class Enemy : MonoBehaviour {
     [SerializeField] Color normalColor;
     [SerializeField] Color hittedColor;
     bool hitted = false;
+
+
+    public delegate void Dead();
+    public static event Dead EnemyDead;
+
+
     void Start() {
         actualHealth = maxHealth;
     }
@@ -30,14 +36,18 @@ public class Enemy : MonoBehaviour {
         actualHealth -= d;
         if (!hitted)
             StartCoroutine(Hit());
-        if(actualHealth <= 0) 
+        if (actualHealth <= 0) {
+            if (EnemyDead != null)
+                EnemyDead();
             this.gameObject.SetActive(false);
-        
+        }
     }
 
     public void ResetEnemy() {
         transform.position = new Vector3(startX, Random.Range(minY, maxY));
         actualHealth = maxHealth;
+        hitted = false;
+        sr.color = normalColor;
     }
 
     IEnumerator Hit() {
