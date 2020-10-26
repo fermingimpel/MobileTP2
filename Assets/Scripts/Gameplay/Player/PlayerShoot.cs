@@ -37,6 +37,7 @@ public class PlayerShoot : MonoBehaviour {
             Enemy e = collision.GetComponent<Enemy>();
             if(e!=null) {
                 e.HitEnemy(damages[(int)type]);
+                e.NegativeEffect((int)type);
                 this.gameObject.SetActive(false);
                 return;
             }
