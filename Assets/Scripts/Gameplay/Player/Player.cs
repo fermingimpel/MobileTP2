@@ -12,6 +12,10 @@ public class Player : MonoBehaviour {
 
     [SerializeField] PlayerShoot[] playerShoots;
     int actualShoot = 0;
+
+    [SerializeField] AudioSource aSource;
+    [SerializeField] AudioClip soundShoot;
+    [SerializeField] float volume;
     void Start() {
         
     }
@@ -29,6 +33,9 @@ public class Player : MonoBehaviour {
     }
     public void Shoot() {
         if (playerShoots[actualShoot] != null) {
+            if (aSource.isPlaying)
+                aSource.Stop();
+            aSource.PlayOneShot(soundShoot, volume);
             playerShoots[actualShoot].gameObject.SetActive(true);
             int type = Random.Range(0, 3);
             playerShoots[actualShoot].SetType((PlayerShoot.ShootType)type);

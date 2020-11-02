@@ -23,21 +23,35 @@ public class Enemy : MonoBehaviour {
     public delegate void Dead();
     public static event Dead EnemyDead;
 
+    [SerializeField] Transform player;
+    [SerializeField] AudioSource source;
+    [SerializeField] AudioClip hitSound;
 
     void Start() {
+        source = GetComponent<AudioSource>();
+        gameObject.SetActive(false);
         speed = baseSpeed;
         actualHealth = maxHealth;
     }
 
     // Update is called once per frame
     void Update() {
-        if (!canMove)
-            return;
         transform.position += Vector3.left * speed * Time.deltaTime;
+    }
+    private void FixedUpdate() {
+        if(player.transform.position.y < transform.position.y) {
+            sr.sortingOrder = -1;
+        }
+        else {
+            sr.sortingOrder = 1;
+        }
     }
 
     public void HitEnemy(float d) {
         actualHealth -= d;
+        if (source.isPlaying)
+            source.Stop();
+        source.PlayOneShot(hitSound);
         if (!hitted)
             StartCoroutine(Hit());
         if (actualHealth <= 0) {
@@ -71,7 +85,9 @@ public class Enemy : MonoBehaviour {
 
     IEnumerator Stun() {
         canMove = false;
+        speed = 0;
         yield return new WaitForSeconds(0.1f);
+        speed = baseSpeed;
         canMove = true;
     }
 
