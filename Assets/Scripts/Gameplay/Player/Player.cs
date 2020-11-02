@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour {
     [SerializeField] float speed;
@@ -15,7 +13,6 @@ public class Player : MonoBehaviour {
 
     [SerializeField] AudioSource aSource;
     [SerializeField] AudioClip soundShoot;
-    [SerializeField] float volume;
     void Start() {
         
     }
@@ -34,8 +31,8 @@ public class Player : MonoBehaviour {
     public void Shoot() {
         if (playerShoots[actualShoot] != null) {
             if (aSource.isPlaying)
-                aSource.Stop();
-            aSource.PlayOneShot(soundShoot, volume);
+                aSource.Stop();   
+            aSource.PlayOneShot(soundShoot);
             playerShoots[actualShoot].gameObject.SetActive(true);
             int type = Random.Range(0, 3);
             playerShoots[actualShoot].SetType((PlayerShoot.ShootType)type);

@@ -7,9 +7,11 @@ public class GameplayManager : MonoBehaviour {
     [SerializeField] ScenesManager sm;
     void Start() {
         EnemyManager.EliminatedAllEnemies += AllEnemiesEliminated;
+        House.Lose += AllEnemiesEliminated;
     }
     private void OnDisable() {
         EnemyManager.EliminatedAllEnemies -= AllEnemiesEliminated;
+        House.Lose -= AllEnemiesEliminated;
     }
 
     // Update is called once per frame
