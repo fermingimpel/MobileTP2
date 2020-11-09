@@ -25,12 +25,21 @@ public class PluginTest : MonoBehaviour {
     }
 
     void SendLog(string msj) {
+        if (Application.platform != RuntimePlatform.Android)
+            return;
+
         PluginInstance.Call("sendLog", msj);
     }
     public string GetLogs() {
+        if (Application.platform != RuntimePlatform.Android)
+            return "";
+
         return PluginInstance.Call<string>("getAllLogs");
     }
     public string GetLogIndex(int i) {
+        if (Application.platform != RuntimePlatform.Android)
+            return "";
+
         return PluginInstance.Call<string>("getIndexLog", i);
     }
     public void TestPluginButton() {
@@ -45,12 +54,18 @@ public class PluginTest : MonoBehaviour {
     }
 
     public int GetLogLength() {
+        if (Application.platform != RuntimePlatform.Android)
+            return 0;
+
         return PluginInstance.Call<int>("getLogLength");
     }
     public void SaveLogs() {
         SaveData.SaveLogData(this);
     }
     public void LoadLogs() {
+        if (Application.platform != RuntimePlatform.Android)
+            return;
+
         PluginSaveData psd = SaveData.LoadLogData();
         PluginInstance.Call("clearLog");
         Debug.Log(psd != null);
@@ -63,12 +78,15 @@ public class PluginTest : MonoBehaviour {
     }
 
     public void ClearLogs() {
-        PluginInstance.Call("clearLog");
+        if (Application.platform != RuntimePlatform.Android)
+            PluginInstance.Call("clearLog");
         outputText.text = GetLogs();
     }
 
     public void DeleteLogs() {
         PluginInstance.Call("clearLog");
+        if (Application.platform != RuntimePlatform.Android)
+            return;
         outputText.text = GetLogs();
         SaveLogs();
     }
