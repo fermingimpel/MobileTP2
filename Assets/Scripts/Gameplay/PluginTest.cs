@@ -1,19 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class PluginTest : MonoBehaviour {
 
-    [SerializeField] TextMeshProUGUI outPutText;
+    [SerializeField] TextMeshProUGUI outputText;
 
-    const string LOGGER_CLASS_NAME = "com.example.fglogger.FGSuperLogger";
-
+    const string PLUGIN_NAME = "com.dvm2020gimpel.plug.FGLogger";
     static AndroidJavaClass _pluginClass = null;
     public static AndroidJavaClass PluginClass {
         get {
             if (_pluginClass == null)
-                _pluginClass = new AndroidJavaClass(LOGGER_CLASS_NAME);
+                _pluginClass = new AndroidJavaClass(PLUGIN_NAME);
             return _pluginClass;
         }
     }
@@ -27,21 +24,52 @@ public class PluginTest : MonoBehaviour {
         }
     }
 
-    string GetLogs() {
+    void SendLog(string msj) {
+        PluginInstance.Call("sendLog", msj);
+    }
+    public string GetLogs() {
         return PluginInstance.Call<string>("getAllLogs");
     }
+    public string GetLogIndex(int i) {
+        return PluginInstance.Call<string>("getIndexLog", i);
+    }
+    public void TestPluginButton() {
+        if (Application.platform != RuntimePlatform.Android) {
+            Debug.LogWarning("You are not in Android Platform");
+            outputText.text = "You are not in Android Platform";
+            return;
+        }
 
-    public void TestPluginBtn() {
-       // if (Application.platform != RuntimePlatform.Android) {
-       //     Debug.LogWarning("No tas en android wachin");
-       //     outPutText.text = "No tas en android";
-       //     return;
-       // }
-
-        PluginInstance.Call("sendLog", Time.time.ToString());
-
-        outPutText.text = GetLogs();
+        SendLog(((int)Time.time).ToString());
+        outputText.text = GetLogs();
     }
 
+    public int GetLogLength() {
+        return PluginInstance.Call<int>("getLogLength");
+    }
+    public void SaveLogs() {
+        SaveData.SaveLogData(this);
+    }
+    public void LoadLogs() {
+        PluginSaveData psd = SaveData.LoadLogData();
+        PluginInstance.Call("clearLog");
+        Debug.Log(psd != null);
+        if (psd != null) {
+            for (int i = 0; i < psd.logs.Count; i++)
+                SendLog(psd.logs[i]);
+            outputText.text = GetLogs();
+            return;
+        }
+    }
 
+    public void ClearLogs() {
+        PluginInstance.Call("clearLog");
+        outputText.text = GetLogs();
+    }
+
+    public void DeleteLogs() {
+        PluginInstance.Call("clearLog");
+        outputText.text = GetLogs();
+        SaveLogs();
+    }
 }
