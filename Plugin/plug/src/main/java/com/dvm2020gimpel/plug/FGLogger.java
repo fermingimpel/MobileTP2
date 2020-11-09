@@ -1,15 +1,12 @@
 package com.dvm2020gimpel.plug;
 
-import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 import java.util.ArrayList;
 
@@ -53,6 +50,7 @@ private static final String GAME_TAG = "TPNro2";
     public int getLogLength(){
         return allLogs.size();
     }
+
 }
 
 
