@@ -7542,7 +7542,7 @@ MonoBehaviour:
   - {fileID: 776407334}
   - {fileID: 1419755788}
   - {fileID: 235673925}
-  enemiesToChangeTimeToSpawn: 0a00000019000000280000003700000050000000
+  enemiesToChangeTimeToSpawn: 0a0000001e000000320000004b0000005a000000
   timesToSpawn:
   - 1
   - 0.85
