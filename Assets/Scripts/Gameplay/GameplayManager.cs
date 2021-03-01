@@ -16,7 +16,7 @@ public class GameplayManager : MonoBehaviour {
         EnemyManager.EliminatedAllEnemies -= AllEnemiesEliminated;
         House.Lose -= AllEnemiesEliminated;
         EnemyManager.KilledEnemy -= KilledEnemy;
-        pluginTest.SaveLogs();
+        pluginTest.SaveData();
     }
 
     void AllEnemiesEliminated() {

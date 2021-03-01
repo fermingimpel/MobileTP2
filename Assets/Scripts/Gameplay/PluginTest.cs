@@ -68,18 +68,18 @@ public class PluginTest : MonoBehaviour {
         return PluginInstance.Call<int>("getTimesPlayed");
     }
 
-    public void SaveLogs() {
-        SaveData.SaveLogData(this);
-    }
-    public void LoadLogs() {
+    public void SaveData() {
         if (Application.platform != RuntimePlatform.Android)
             return;
 
-        PluginSaveData psd = SaveData.LoadLogData();
-        Debug.Log(psd != null);
-        if (psd != null) {
-            PluginInstance.Call("setEnemiesKilled", psd.enemiesKilled);
-            PluginInstance.Call("setTimesPlayed", psd.timesPlayed);
-        }
+        PluginInstance.Call("saveData", Application.persistentDataPath, "tp.dat", 0);
+        PluginInstance.Call("saveData", Application.persistentDataPath, "ek.dat", 1);
+    }
+    public void LoadData() {
+        if (Application.platform != RuntimePlatform.Android)
+            return;
+
+        PluginInstance.Call("loadData", Application.persistentDataPath, "tp.dat", 0);
+        PluginInstance.Call("loadData", Application.persistentDataPath, "ek.dat", 1);
     }
 }

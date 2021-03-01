@@ -10,7 +10,7 @@ public class UIMenu : MonoBehaviour {
     [SerializeField] TextMeshProUGUI textEnemiesKilled;
     void Start() {
         pluginTest = FindObjectOfType<PluginTest>();
-        pluginTest.LoadLogs();
+        pluginTest.LoadData();
         textTimesPlayed.text = "Times Played: " + pluginTest.GetTimesPlayed();
         textEnemiesKilled.text = "Enemies Killed: " + pluginTest.GetEnemiesKilled();
     }
