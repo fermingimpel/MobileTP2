@@ -49,7 +49,6 @@ public class Enemy : MonoBehaviour {
 
     public void HitEnemy(float d) {
         actualHealth -= d;
-        Handheld.Vibrate();
         if (source.isPlaying)
             source.Stop();
         source.PlayOneShot(hitSound);

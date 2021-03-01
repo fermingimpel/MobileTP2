@@ -39,6 +39,7 @@ public class EnemyManager : MonoBehaviour {
     }
 
     void EnemyDead() {
+        Handheld.Vibrate();
         enemiesEliminated++;
         if (KilledEnemy != null) {
             if (enemiesEliminated >= enemiesToCreate)

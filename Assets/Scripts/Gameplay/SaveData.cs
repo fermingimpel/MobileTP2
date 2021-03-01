@@ -13,7 +13,6 @@ public static class SaveData {
         PluginSaveData logsData = new PluginSaveData(t);
         formatter.Serialize(stream, logsData);
         stream.Close();
-        Debug.Log("Aqui entra");
     }
     public static PluginSaveData LoadLogData() {
         string path = Application.persistentDataPath + "/logs.dat";
@@ -22,10 +21,8 @@ public static class SaveData {
             FileStream stream = new FileStream(path, FileMode.Open);
             PluginSaveData psd = (PluginSaveData)formatter.Deserialize(stream);
             stream.Close();
-        Debug.Log("Aqui tmb");
             return psd;
         }
-        Debug.Log(":(");
         return null;
     }
 

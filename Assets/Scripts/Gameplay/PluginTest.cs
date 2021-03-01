@@ -2,10 +2,7 @@
 using UnityEngine;
 
 public class PluginTest : MonoBehaviour {
-
-    [SerializeField] TextMeshProUGUI outputText;
-
-    const string PLUGIN_NAME = "com.dvm2020gimpel.plug.FGLogger";
+    const string PLUGIN_NAME = "com.dvm2020gimpel.unityplugin.MyPlugin";
     static AndroidJavaClass _pluginClass = null;
     public static AndroidJavaClass PluginClass {
         get {
@@ -24,41 +21,53 @@ public class PluginTest : MonoBehaviour {
         }
     }
 
-    void SendLog(string msj) {
-        if (Application.platform != RuntimePlatform.Android)
-            return;
-
-        PluginInstance.Call("sendLog", msj);
-    }
-    public string GetLogs() {
-        if (Application.platform != RuntimePlatform.Android)
-            return "";
-
-        return PluginInstance.Call<string>("getAllLogs");
-    }
-    public string GetLogIndex(int i) {
-        if (Application.platform != RuntimePlatform.Android)
-            return "";
-
-        return PluginInstance.Call<string>("getIndexLog", i);
-    }
-    public void TestPluginButton() {
-        if (Application.platform != RuntimePlatform.Android) {
-            Debug.LogWarning("You are not in Android Platform");
-            outputText.text = "You are not in Android Platform";
+    static PluginTest p;
+    void Awake() {
+        if (p != null) {
+            Destroy(gameObject);
             return;
         }
-
-        SendLog(((int)Time.time).ToString());
-        outputText.text = GetLogs();
+        DontDestroyOnLoad(gameObject);
+        p = this;
     }
 
-    public int GetLogLength() {
+    public void SetEnemyKilled(int ek) {
+        if (Application.platform != RuntimePlatform.Android)
+            return;
+
+        PluginInstance.Call("setEnemiesKilled", ek);
+    }
+    public void AddEnemyKilled(int ek) {
+        if (Application.platform != RuntimePlatform.Android)
+            return;
+
+        PluginInstance.Call("addEnemiesKilled", ek);
+    }
+    public int GetEnemiesKilled() {
         if (Application.platform != RuntimePlatform.Android)
             return 0;
 
-        return PluginInstance.Call<int>("getLogLength");
+        return PluginInstance.Call<int>("getEnemiesKilled");
     }
+    public void SetTimesPlayed(int tp) {
+        if (Application.platform != RuntimePlatform.Android)
+            return;
+
+        PluginInstance.Call("setTimesPlayed", tp);
+    }
+    public void AddTimesPlayed(int tp) {
+        if(Application.platform != RuntimePlatform.Android)
+            return;
+
+        PluginInstance.Call("addTimesPlayed", tp);
+    }
+    public int GetTimesPlayed() {
+        if (Application.platform != RuntimePlatform.Android)
+            return 0;
+
+        return PluginInstance.Call<int>("getTimesPlayed");
+    }
+
     public void SaveLogs() {
         SaveData.SaveLogData(this);
     }
@@ -67,27 +76,10 @@ public class PluginTest : MonoBehaviour {
             return;
 
         PluginSaveData psd = SaveData.LoadLogData();
-        PluginInstance.Call("clearLog");
         Debug.Log(psd != null);
         if (psd != null) {
-            for (int i = 0; i < psd.logs.Count; i++)
-                SendLog(psd.logs[i]);
-            outputText.text = GetLogs();
-            return;
+            PluginInstance.Call("setEnemiesKilled", psd.enemiesKilled);
+            PluginInstance.Call("setTimesPlayed", psd.timesPlayed);
         }
-    }
-
-    public void ClearLogs() {
-        if (Application.platform != RuntimePlatform.Android)
-            PluginInstance.Call("clearLog");
-        outputText.text = GetLogs();
-    }
-
-    public void DeleteLogs() {
-        PluginInstance.Call("clearLog");
-        if (Application.platform != RuntimePlatform.Android)
-            return;
-        outputText.text = GetLogs();
-        SaveLogs();
     }
 }
