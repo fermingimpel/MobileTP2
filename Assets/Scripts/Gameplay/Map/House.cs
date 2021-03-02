@@ -9,13 +9,35 @@ public class House : MonoBehaviour {
     public static event Action Lose;
     bool ended = false;
     [SerializeField] AudioSource source;
+
+    [SerializeField] int lives;
+
+    public delegate void EnemyHitHome(int l);
+    public static event EnemyHitHome HittedHome;
+
+    private void Start() {
+        if (HittedHome != null)
+            HittedHome(lives);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision) {
         if (!ended && collision.CompareTag("Enemy")) {
-            if (Lose != null)
-                Lose();
-            ended = true;
-            house.SetActive(false);
-            source.Play();
+            lives--;
+
+            collision.GetComponent<Enemy>().HitEnemy(9999);
+
+            if (lives <= 0) {
+                lives = 0;
+                if (Lose != null)
+                    Lose();
+                ended = true;
+                house.SetActive(false);
+                source.Play();
+            }
+
+            if (HittedHome != null)
+                HittedHome(lives);
+
         }
     }
 }

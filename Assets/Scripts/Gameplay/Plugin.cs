@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Plugin : MonoBehaviour {
+public /*abstract*/ class Plugin : MonoBehaviour {
 
     //static Plugin p;
     //void Awake() {
