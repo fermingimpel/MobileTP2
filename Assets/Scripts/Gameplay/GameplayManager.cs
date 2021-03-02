@@ -10,7 +10,6 @@ public class GameplayManager : MonoBehaviour {
         EnemyManager.EliminatedAllEnemies += AllEnemiesEliminated;
         House.Lose += AllEnemiesEliminated;
         EnemyManager.KilledEnemy += KilledEnemy;
-        pluginTest = FindObjectOfType<PluginTest>();
     }
     private void OnDisable() {
         EnemyManager.EliminatedAllEnemies -= AllEnemiesEliminated;

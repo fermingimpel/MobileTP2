@@ -1004,7 +1004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74f320e91f5b3c14ba05d04af0b5c62b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pluginTest: {fileID: 0}
+  pluginTest: {fileID: 1613206310}
   textTimesPlayed: {fileID: 1694245745}
   textEnemiesKilled: {fileID: 191459029}
 --- !u!1 &382756645
@@ -3655,6 +3655,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1613206310 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1890987013842787482, guid: d51f146fd35441343bff5ce800ae49f0,
+    type: 3}
+  m_PrefabInstance: {fileID: 4584430296722844676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a26b8c951ae2df459bf097e1cbaf484, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1644119719
 GameObject:
   m_ObjectHideFlags: 0
