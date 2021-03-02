@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-public class PluginTest : MonoBehaviour {
+public class PluginAndroid : Plugin {
     const string PLUGIN_NAME = "com.dvm2020gimpel.unityplugin.MyPlugin";
     static AndroidJavaClass _pluginClass = null;
     public static AndroidJavaClass PluginClass {
@@ -21,61 +21,51 @@ public class PluginTest : MonoBehaviour {
         }
     }
 
-    static PluginTest p;
-    void Awake() {
-        if (p != null) {
-            Destroy(gameObject);
-            return;
-        }
-        DontDestroyOnLoad(gameObject);
-        p = this;
-    }
-
-    public void SetEnemyKilled(int ek) {
+    public override void SetEnemyKilled(int ek) {
         if (Application.platform != RuntimePlatform.Android)
             return;
 
         PluginInstance.Call("setEnemiesKilled", ek);
     }
-    public void AddEnemyKilled(int ek) {
+    public override void AddEnemyKilled(int ek) {
         if (Application.platform != RuntimePlatform.Android)
             return;
 
         PluginInstance.Call("addEnemiesKilled", ek);
     }
-    public int GetEnemiesKilled() {
+    public override int GetEnemiesKilled() {
         if (Application.platform != RuntimePlatform.Android)
             return 0;
 
         return PluginInstance.Call<int>("getEnemiesKilled");
     }
-    public void SetTimesPlayed(int tp) {
+    public override void SetTimesPlayed(int tp) {
         if (Application.platform != RuntimePlatform.Android)
             return;
 
         PluginInstance.Call("setTimesPlayed", tp);
     }
-    public void AddTimesPlayed(int tp) {
+    public override void AddTimesPlayed(int tp) {
         if(Application.platform != RuntimePlatform.Android)
             return;
 
         PluginInstance.Call("addTimesPlayed", tp);
     }
-    public int GetTimesPlayed() {
+    public override int GetTimesPlayed() {
         if (Application.platform != RuntimePlatform.Android)
             return 0;
 
         return PluginInstance.Call<int>("getTimesPlayed");
     }
 
-    public void SaveData() {
+    public override void SaveData() {
         if (Application.platform != RuntimePlatform.Android)
             return;
 
         PluginInstance.Call("saveData", Application.persistentDataPath, "tp.dat", 0);
         PluginInstance.Call("saveData", Application.persistentDataPath, "ek.dat", 1);
     }
-    public void LoadData() {
+    public override void LoadData() {
         if (Application.platform != RuntimePlatform.Android)
             return;
 
